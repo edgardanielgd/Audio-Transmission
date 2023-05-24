@@ -27,11 +27,6 @@ def build_huffman_probabilities(
 def build_huffman_tree(
   data
 ):
-  # Useful class for tree build
-  class Tree:
-    def __init__(self):
-      self.length = 0
-      self.root = None
 
   class Node:
     def __init__(self, value):
