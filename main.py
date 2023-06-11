@@ -14,16 +14,16 @@ from Utils.Diferencial import DPCMCode, DPCMDecode
 
 print("Read file with custom sampling rate")
 
-# File to be parsed
-filename = "car.wav"
+# # File to be parsed
+# filename = "car.wav"
 
-# 1. Get the file path to an included audio example
-y, sr = librosa.load(
-  "./Videos/" + filename, # File name
-  duration=10, # Video time slice (from 0 to duration)
-  sr=44100, # Sampling rate
-  mono=True, # Convert to mono
-)
+# # 1. Get the file path to an included audio example
+# y, sr = librosa.load(
+#   "./Videos/" + filename, # File name
+#   duration=10, # Video time slice (from 0 to duration)
+#   sr=44100, # Sampling rate
+#   mono=True, # Convert to mono
+# )
 
 def processWithHuffman( y, sr ):
     # Parsing dict must be one of the items sent
@@ -81,4 +81,4 @@ def processWithDPCM( y, sr ):
 
     
 # processWithHuffman( y, sr )
-processWithDPCM( y, sr )
+# processWithDPCM( y, sr )
