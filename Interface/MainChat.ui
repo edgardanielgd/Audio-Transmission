@@ -6,12 +6,12 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>515</width>
+    <height>424</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Frame</string>
+   <string>Main Chat</string>
   </property>
   <property name="styleSheet">
    <string notr="true">background-image: url(:/Background/chatbackground.jpg)</string>
@@ -19,9 +19,9 @@
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>160</x>
+     <x>210</x>
      <y>10</y>
-     <width>101</width>
+     <width>141</width>
      <height>20</height>
     </rect>
    </property>
@@ -446,49 +446,187 @@
     </font>
    </property>
    <property name="styleSheet">
-    <string notr="true">color: white;
-opacity: 0.0 	;</string>
+    <string notr="true">background: none;
+background-color: black;
+border-style: solid;
+border-color: white;
+border-width: 1px;
+color: white;</string>
    </property>
    <property name="text">
     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt; color:#ffffff;&quot;&gt;Chat Principal&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
   </widget>
-  <widget class="QScrollArea" name="ChatBody">
+  <widget class="QTabWidget" name="tabWidget">
    <property name="geometry">
     <rect>
-     <x>10</x>
-     <y>40</y>
-     <width>381</width>
-     <height>241</height>
+     <x>20</x>
+     <y>30</y>
+     <width>471</width>
+     <height>341</height>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">border-color: white;
-border-style: solid;
-border-width: 1px;</string>
+    <string notr="true">background: none;
+background-color: black;</string>
    </property>
-   <property name="widgetResizable">
-    <bool>true</bool>
+   <property name="currentIndex">
+    <number>1</number>
    </property>
-   <widget class="QWidget" name="scrollAreaWidgetContents">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>0</y>
-      <width>379</width>
-      <height>239</height>
-     </rect>
-    </property>
-    <layout class="QVBoxLayout" name="verticalLayout">
-     <item>
-      <layout class="QVBoxLayout" name="MainLayout">
-       <property name="sizeConstraint">
-        <enum>QLayout::SetFixedSize</enum>
-       </property>
+   <widget class="QWidget" name="tabChat">
+    <attribute name="title">
+     <string>Chat</string>
+    </attribute>
+    <widget class="QScrollArea" name="ChatBody">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>10</y>
+       <width>441</width>
+       <height>291</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true"/>
+     </property>
+     <property name="widgetResizable">
+      <bool>true</bool>
+     </property>
+     <widget class="QWidget" name="scrollAreaWidgetContents">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>439</width>
+        <height>289</height>
+       </rect>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <item>
+        <layout class="QVBoxLayout" name="MainLayout">
+         <property name="sizeConstraint">
+          <enum>QLayout::SetFixedSize</enum>
+         </property>
+        </layout>
+       </item>
       </layout>
-     </item>
-    </layout>
+     </widget>
+    </widget>
    </widget>
+   <widget class="QWidget" name="tabLogs">
+    <attribute name="title">
+     <string>Logs</string>
+    </attribute>
+    <widget class="QScrollArea" name="scrollArea">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>10</y>
+       <width>441</width>
+       <height>151</height>
+      </rect>
+     </property>
+     <property name="widgetResizable">
+      <bool>true</bool>
+     </property>
+     <widget class="QWidget" name="scrollAreaWidgetContents_2">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>439</width>
+        <height>149</height>
+       </rect>
+      </property>
+      <widget class="QWidget" name="verticalLayoutWidget">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>10</y>
+         <width>421</width>
+         <height>131</height>
+        </rect>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout_2">
+        <item>
+         <widget class="QLabel" name="drwGeneralChatsLog">
+          <property name="styleSheet">
+           <string notr="true">background: none;
+background-color: white;</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </widget>
+    <widget class="QTextEdit" name="txtGeneralChatLogs">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>170</y>
+       <width>441</width>
+       <height>121</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">color: white;</string>
+     </property>
+     <property name="readOnly">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </widget>
+  </widget>
+  <widget class="QPushButton" name="btnAddChatter">
+   <property name="geometry">
+    <rect>
+     <x>350</x>
+     <y>380</y>
+     <width>111</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton {
+	background: none;
+	background-color: black;
+	border-style: solid;
+	border-width: 1px;
+	border-color: white;
+	color: white;
+}
+
+QPushButton:hover {
+	background-color: white;
+	border-color: black;
+	color: black;
+}</string>
+   </property>
+   <property name="text">
+    <string>Añadir Miembro</string>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="txtNewUserName">
+   <property name="geometry">
+    <rect>
+     <x>193</x>
+     <y>380</y>
+     <width>151</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background: none;
+background-color: black;
+color: white;</string>
+   </property>
   </widget>
  </widget>
  <resources>

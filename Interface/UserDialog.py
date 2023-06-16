@@ -16,14 +16,15 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QFrame, QLabel, QPlainTextEdit,
-    QPushButton, QSizePolicy, QWidget)
+    QPushButton, QScrollArea, QSizePolicy, QTextEdit,
+    QVBoxLayout, QWidget)
 import ChatterBackground_rc
 
 class Ui_Frame(object):
     def setupUi(self, Frame):
         if not Frame.objectName():
             Frame.setObjectName(u"Frame")
-        Frame.resize(400, 90)
+        Frame.resize(510, 430)
         palette = QPalette()
         brush = QBrush(QColor(0, 0, 0, 255))
         brush.setStyle(Qt.SolidPattern)
@@ -105,7 +106,7 @@ class Ui_Frame(object):
         Frame.setStyleSheet(u"background-image: url(:/Background/chatbackground.jpg)")
         self.label = QLabel(Frame)
         self.label.setObjectName(u"label")
-        self.label.setGeometry(QRect(30, 0, 161, 20))
+        self.label.setGeometry(QRect(20, 20, 171, 31))
         palette1 = QPalette()
         palette1.setBrush(QPalette.Active, QPalette.WindowText, brush6)
         palette1.setBrush(QPalette.Active, QPalette.Button, brush)
@@ -137,15 +138,15 @@ class Ui_Frame(object):
         palette1.setBrush(QPalette.Inactive, QPalette.AlternateBase, brush)
         palette1.setBrush(QPalette.Inactive, QPalette.ToolTipBase, brush10)
         palette1.setBrush(QPalette.Inactive, QPalette.ToolTipText, brush)
-        palette1.setBrush(QPalette.Disabled, QPalette.WindowText, brush)
+        palette1.setBrush(QPalette.Disabled, QPalette.WindowText, brush6)
         palette1.setBrush(QPalette.Disabled, QPalette.Button, brush)
         palette1.setBrush(QPalette.Disabled, QPalette.Light, brush)
         palette1.setBrush(QPalette.Disabled, QPalette.Midlight, brush)
         palette1.setBrush(QPalette.Disabled, QPalette.Dark, brush)
         palette1.setBrush(QPalette.Disabled, QPalette.Mid, brush)
-        palette1.setBrush(QPalette.Disabled, QPalette.Text, brush)
+        palette1.setBrush(QPalette.Disabled, QPalette.Text, brush6)
         palette1.setBrush(QPalette.Disabled, QPalette.BrightText, brush6)
-        palette1.setBrush(QPalette.Disabled, QPalette.ButtonText, brush)
+        palette1.setBrush(QPalette.Disabled, QPalette.ButtonText, brush6)
         palette1.setBrush(QPalette.Disabled, QPalette.Base, brush)
         palette1.setBrush(QPalette.Disabled, QPalette.Window, brush)
         palette1.setBrush(QPalette.Disabled, QPalette.Shadow, brush)
@@ -156,61 +157,177 @@ class Ui_Frame(object):
         font = QFont()
         font.setPointSize(7)
         self.label.setFont(font)
-        self.label.setStyleSheet(u"color: white;\n"
-"opacity: 0.0 	;")
+        self.label.setStyleSheet(u"background: none;\n"
+"background-color: black;\n"
+"border-style: solid;\n"
+"border-color: white;\n"
+"border-width: 1px;\n"
+"color: white;")
+        self.label.setAlignment(Qt.AlignCenter)
         self.btnAudioRecord = QPushButton(Frame)
         self.btnAudioRecord.setObjectName(u"btnAudioRecord")
-        self.btnAudioRecord.setGeometry(QRect(10, 40, 56, 21))
+        self.btnAudioRecord.setGeometry(QRect(20, 100, 56, 21))
         palette2 = QPalette()
         palette2.setBrush(QPalette.Active, QPalette.WindowText, brush6)
+        palette2.setBrush(QPalette.Active, QPalette.Button, brush)
         palette2.setBrush(QPalette.Active, QPalette.Text, brush6)
         palette2.setBrush(QPalette.Active, QPalette.ButtonText, brush6)
+        palette2.setBrush(QPalette.Active, QPalette.Base, brush)
+        palette2.setBrush(QPalette.Active, QPalette.Window, brush)
         palette2.setBrush(QPalette.Inactive, QPalette.WindowText, brush6)
+        palette2.setBrush(QPalette.Inactive, QPalette.Button, brush)
         palette2.setBrush(QPalette.Inactive, QPalette.Text, brush6)
         palette2.setBrush(QPalette.Inactive, QPalette.ButtonText, brush6)
+        palette2.setBrush(QPalette.Inactive, QPalette.Base, brush)
+        palette2.setBrush(QPalette.Inactive, QPalette.Window, brush)
         palette2.setBrush(QPalette.Disabled, QPalette.WindowText, brush6)
+        palette2.setBrush(QPalette.Disabled, QPalette.Button, brush)
         palette2.setBrush(QPalette.Disabled, QPalette.Text, brush6)
         palette2.setBrush(QPalette.Disabled, QPalette.ButtonText, brush6)
+        palette2.setBrush(QPalette.Disabled, QPalette.Base, brush)
+        palette2.setBrush(QPalette.Disabled, QPalette.Window, brush)
         self.btnAudioRecord.setPalette(palette2)
         font1 = QFont()
         font1.setPointSize(6)
         self.btnAudioRecord.setFont(font1)
-        self.btnAudioRecord.setStyleSheet(u"color: white")
+        self.btnAudioRecord.setStyleSheet(u"QPushButton {\n"
+"	background: none;\n"
+"	background-color: black;\n"
+"	border-style: solid;\n"
+"	border-width: 1px;\n"
+"	border-color: white;\n"
+"	color: white;\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"	background-color: white;\n"
+"	border-color: black;\n"
+"	color: black;\n"
+"}")
         self.txtMessageText = QPlainTextEdit(Frame)
         self.txtMessageText.setObjectName(u"txtMessageText")
-        self.txtMessageText.setGeometry(QRect(140, 30, 191, 40))
+        self.txtMessageText.setGeometry(QRect(180, 90, 191, 40))
         self.txtMessageText.setFont(font1)
-        self.txtMessageText.setStyleSheet(u"color: white")
+        self.txtMessageText.setStyleSheet(u"background: none;\n"
+"background-color: black;")
         self.label_3 = QLabel(Frame)
         self.label_3.setObjectName(u"label_3")
-        self.label_3.setGeometry(QRect(160, 70, 161, 16))
-        self.label_3.setStyleSheet(u"color: white")
+        self.label_3.setGeometry(QRect(180, 140, 191, 20))
+        self.label_3.setStyleSheet(u"background: none;\n"
+"background-color: black;\n"
+"border-style: solid;\n"
+"border-color: white;\n"
+"border-width: 1px;\n"
+"color: white;")
+        self.label_3.setAlignment(Qt.AlignCenter)
         self.btnSend = QPushButton(Frame)
         self.btnSend.setObjectName(u"btnSend")
-        self.btnSend.setGeometry(QRect(340, 40, 56, 17))
+        self.btnSend.setGeometry(QRect(400, 100, 56, 17))
         self.btnSend.setFont(font1)
-        self.btnSend.setStyleSheet(u"color: white")
+        self.btnSend.setStyleSheet(u"QPushButton {\n"
+"	background: none;\n"
+"	background-color: black;\n"
+"	border-style: solid;\n"
+"	border-width: 1px;\n"
+"	border-color: white;\n"
+"	color: white;\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"	background-color: white;\n"
+"	border-color: black;\n"
+"	color: black;\n"
+"}")
         self.btnSendImage = QPushButton(Frame)
         self.btnSendImage.setObjectName(u"btnSendImage")
-        self.btnSendImage.setGeometry(QRect(70, 40, 61, 20))
+        self.btnSendImage.setGeometry(QRect(100, 100, 61, 20))
         self.btnSendImage.setFont(font1)
-        self.btnSendImage.setStyleSheet(u"color: white")
+        self.btnSendImage.setStyleSheet(u"QPushButton {\n"
+"	background: none;\n"
+"	background-color: black;\n"
+"	border-style: solid;\n"
+"	border-width: 1px;\n"
+"	border-color: white;\n"
+"	color: white;\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"	background-color: white;\n"
+"	border-color: black;\n"
+"	color: black;\n"
+"}")
         self.lblUsername = QLabel(Frame)
         self.lblUsername.setObjectName(u"lblUsername")
-        self.lblUsername.setGeometry(QRect(210, 0, 151, 20))
+        self.lblUsername.setGeometry(QRect(210, 0, 231, 71))
         palette3 = QPalette()
         palette3.setBrush(QPalette.Active, QPalette.WindowText, brush6)
+        brush12 = QBrush(QColor(0, 0, 0, 0))
+        brush12.setStyle(Qt.SolidPattern)
+        palette3.setBrush(QPalette.Active, QPalette.Button, brush12)
         palette3.setBrush(QPalette.Active, QPalette.Text, brush6)
         palette3.setBrush(QPalette.Active, QPalette.ButtonText, brush6)
+        palette3.setBrush(QPalette.Active, QPalette.Base, brush12)
+        palette3.setBrush(QPalette.Active, QPalette.Window, brush12)
         palette3.setBrush(QPalette.Inactive, QPalette.WindowText, brush6)
+        palette3.setBrush(QPalette.Inactive, QPalette.Button, brush12)
         palette3.setBrush(QPalette.Inactive, QPalette.Text, brush6)
         palette3.setBrush(QPalette.Inactive, QPalette.ButtonText, brush6)
+        palette3.setBrush(QPalette.Inactive, QPalette.Base, brush12)
+        palette3.setBrush(QPalette.Inactive, QPalette.Window, brush12)
         palette3.setBrush(QPalette.Disabled, QPalette.WindowText, brush6)
+        palette3.setBrush(QPalette.Disabled, QPalette.Button, brush12)
         palette3.setBrush(QPalette.Disabled, QPalette.Text, brush6)
         palette3.setBrush(QPalette.Disabled, QPalette.ButtonText, brush6)
+        palette3.setBrush(QPalette.Disabled, QPalette.Base, brush12)
+        palette3.setBrush(QPalette.Disabled, QPalette.Window, brush12)
         self.lblUsername.setPalette(palette3)
-        self.lblUsername.setStyleSheet(u"color: white")
-        self.lblUsername.setTextFormat(Qt.RichText)
+        font2 = QFont()
+        font2.setFamilies([u"Comic Sans MS"])
+        font2.setPointSize(25)
+        self.lblUsername.setFont(font2)
+        self.lblUsername.setStyleSheet(u"background: none;\n"
+"background: transparent;")
+        self.lblUsername.setTextFormat(Qt.PlainText)
+        self.lblUsername.setAlignment(Qt.AlignCenter)
+        self.scrollArea = QScrollArea(Frame)
+        self.scrollArea.setObjectName(u"scrollArea")
+        self.scrollArea.setGeometry(QRect(20, 200, 451, 131))
+        self.scrollArea.setStyleSheet(u"background: none;\n"
+"background-color: black;")
+        self.scrollArea.setWidgetResizable(True)
+        self.scrollAreaWidgetContents = QWidget()
+        self.scrollAreaWidgetContents.setObjectName(u"scrollAreaWidgetContents")
+        self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 449, 129))
+        self.verticalLayoutWidget = QWidget(self.scrollAreaWidgetContents)
+        self.verticalLayoutWidget.setObjectName(u"verticalLayoutWidget")
+        self.verticalLayoutWidget.setGeometry(QRect(10, 10, 431, 111))
+        self.verticalLayout = QVBoxLayout(self.verticalLayoutWidget)
+        self.verticalLayout.setObjectName(u"verticalLayout")
+        self.verticalLayout.setContentsMargins(0, 0, 0, 0)
+        self.label_2 = QLabel(self.verticalLayoutWidget)
+        self.label_2.setObjectName(u"label_2")
+        self.label_2.setStyleSheet(u"background: none;\n"
+"background-color: white;")
+
+        self.verticalLayout.addWidget(self.label_2)
+
+        self.scrollArea.setWidget(self.scrollAreaWidgetContents)
+        self.textEdit = QTextEdit(Frame)
+        self.textEdit.setObjectName(u"textEdit")
+        self.textEdit.setGeometry(QRect(20, 340, 451, 71))
+        self.textEdit.setStyleSheet(u"background: none;\n"
+"background-color: black;")
+        self.textEdit.setReadOnly(True)
+        self.label_4 = QLabel(Frame)
+        self.label_4.setObjectName(u"label_4")
+        self.label_4.setGeometry(QRect(20, 170, 191, 20))
+        self.label_4.setStyleSheet(u"background: none;\n"
+"background-color: black;\n"
+"border-style: solid;\n"
+"border-color: white;\n"
+"border-width: 1px;\n"
+"color: white;")
+        self.label_4.setAlignment(Qt.AlignCenter)
 
         self.retranslateUi(Frame)
 
@@ -224,6 +341,8 @@ class Ui_Frame(object):
         self.label_3.setText(QCoreApplication.translate("Frame", u"Escribe un mensaje y env\u00edalo!", None))
         self.btnSend.setText(QCoreApplication.translate("Frame", u"Enviar", None))
         self.btnSendImage.setText(QCoreApplication.translate("Frame", u"Enviar imagen", None))
-        self.lblUsername.setText(QCoreApplication.translate("Frame", u"<html><head/><body><p><span style=\" font-size:10pt; color:#ffffff;\">User</span></p></body></html>", None))
+        self.lblUsername.setText(QCoreApplication.translate("Frame", u"Username", None))
+        self.label_2.setText("")
+        self.label_4.setText(QCoreApplication.translate("Frame", u"Logs", None))
     # retranslateUi
 

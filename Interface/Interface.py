@@ -4,20 +4,22 @@ from PySide6 import QtCore, QtGui, QtWidgets
 from PySide6.QtWidgets import QDialog, QApplication, QMainWindow, QFileDialog, QMessageBox
 import sys
 
-users = [ "Jhonatan", "Edgar", "Miguel" ]
-chatters = []
+initial_users = [ "Jhonatan", "Edgar", "Miguel" ]
+users = []
 
 # Construct a QApplication
 app = QApplication([])
 # Create a window and show it
 
+OnAddChatter = lambda a : users.append( a )
+
 # Create a main chat window
-mainChat = MainChat( )
+mainChat = MainChat( OnAddChatter )
 
 # Create a user interface for each user
-for user in users:
+for user in initial_users:
     dialog = UserDialog( mainChat, user )
-    chatters.append( dialog )
+    users.append( dialog )
     dialog.show()
 
 mainChat.show()

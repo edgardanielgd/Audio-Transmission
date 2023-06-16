@@ -12,10 +12,10 @@ class UserPanel(tk.Frame):
         self.shared_chat = shared_chat
         self.username = username
 
-        self.FORMAT = pyaudio.paFloat32
+        self.FORMAT = pyaudio.paFloat16
         self.CHANNELS = 1
         self.RATE = 44100
-        self.CHUNK = 1024 * 2
+        self.CHUNK = 1024
         self.p = None
         self.stream = None
         self.recording = False
