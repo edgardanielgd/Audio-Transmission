@@ -1,6 +1,8 @@
 from UserDialog import Ui_Frame
 from PySide6.QtWidgets import QDialog, QFileDialog
-from Utils import configStyleSheet
+from Utils import Audio, Images, Text, Huffman
+from Utils.Misc import *
+from PIL import Image
 import pyaudio
 import wave
 import numpy as np
@@ -18,10 +20,18 @@ class UserDialog(QDialog, Ui_Frame):
         self.btnSendImage.clicked.connect(self.sendImage)
         self.btnAudioRecord.clicked.connect(self.audioRecord)
 
+        # Fill up combobox with possible options
+        self.cmbEncoders.addItems( [
+            "Huffman"
+        ] )
+
+        # If main chat window is closed, close this window too
+        self.parentChat.destroyed.connect( self.close )
+
         self.setWindowTitle("ChatBox of " + self.username)
 
         # Audio Recording settings
-        self.FORMAT = pyaudio.paFloat32
+        self.FORMAT = pyaudio.paInt16
         self.CHANNELS = 1
         self.RATE = 44100
         self.CHUNK = 1024
@@ -32,10 +42,23 @@ class UserDialog(QDialog, Ui_Frame):
         self.recording = False
 
     def send(self):
-        print("Enviando pa " , self.username )
-        self.parentChat.receiveText( self.username, self.txtMessageText.toPlainText() )
+
+        # Parse text to numbers
+        vector = Text.convertTextToVector( self.txtMessageText.toPlainText() )
+
+        # Get encoded data
+        data = self.encodeData( vector )
+
+        data["type"] = "text"
+
+        self.parentChat.receiveData( data )
+
+        # self.parentChat.addText( self.username, self.txtMessageText.toPlainText() )
     
     def sendImage(self):
+
+        registerLog( "Enviando imagen", self.txtLog)
+
         # Ask user for the path of target image
         dialog = QFileDialog()
         dialog.setStyleSheet(
@@ -48,47 +71,39 @@ class UserDialog(QDialog, Ui_Frame):
         dialog.setWindowTitle('Choose the image you want to send')
         dialog.setFileMode(QFileDialog.ExistingFile)
         
-        if dialog.exec() == QFileDialog.Accepted:
-            path = dialog.selectedFiles()[0]
-            print( path )
+        if dialog.exec() != QFileDialog.Accepted:
+            return
+        
+        path = dialog.selectedFiles()[0]
 
-        # options = QFileDialog.Options()
-        # options |= QFileDialog.DontUseNativeDialog
-        # fileName, _ = QFileDialog.getOpenFileName(
-        #     self, "Choose an image to upload!", 
-        #     "", "All Files (*);;Python Files (*.py)", options=options)
-        # if fileName:
-        #     print(fileName)
-    
+        # Read the image
+        
+        image = Image.open( path )
+
+        # Parse text to numbers
+        vector = Images.convertImageToVector( image )
+        
+        # Send the image
+        self.parentChat.addImage( self.username, image )
+
     def audioRecord(self):
         if self.recording :
-            # Stop recording audio
-            output_file = "recorded.wav"
-            # wf = wave.open(output_file, "wb")
-            # wf.setnchannels(self.CHANNELS)
-            # wf.setsampwidth(self.p.get_sample_size(self.FORMAT))
-            # wf.setframerate(self.RATE)
-            # wf.writeframes(b''.join(self.frames))
-            # wf.close()
-
-            p = pyaudio.PyAudio()
-            stream = self.p.open(
-                format=self.FORMAT,
-                channels=self.CHANNELS,
-                rate=self.RATE,
-                output=True
+            # Call parent receiver for this info
+            self.parentChat.receiveAudio( 
+                self.username, self.frames, 
+                self.FORMAT, self.CHANNELS, self.RATE 
             )
-            
-            for frame in self.frames:
-                stream.write( frame )
 
-            stream.close()
-            p.terminate()
+            # Parse audio to levels
+            levels, quantification_dict = Audio.convertAudioToVector( self.frames )
 
+            self.stream.stop_stream()
             self.stream.close()
             self.p.terminate()
+
             self.stream = None
             self.p = None
+            self.frames = []
 
             self.btnAudioRecord.setText("Grabar Audio")
         else:
@@ -108,8 +123,32 @@ class UserDialog(QDialog, Ui_Frame):
         self.btnAudioRecord.setStyleSheet(configStyleSheet( self.recording ))
 
     def audioRecordcallback(self, data, frame_count, time_info, status):
-        data = np.fromstring(data, 'int32')
+        data = np.fromstring(data, 'int16')
         self.frames.append(data)
         return None, pyaudio.paContinue
 
+    def encodeData(self, data, **kwargs):
+        # Data should come as a numpy array of discrete values
+        # We will take care of each method and use different encoding schemes
+
+        method = self.cmbEncoders.currentText()
+        data = {
+            "method" : method,
+            "username" : self.username,
+        }
+
+        if method == "Huffman":
+            # Huffman encoding
+
+            # Encode data with huffman
+            encoding_tree, bits_encoded = Huffman.encode_huffman( data )
+
+            # We have all needed info to decode this data on
+            # Main Chat wiew
+            data.update( {
+                "data" : bits_encoded,
+                "encoding_tree" : encoding_tree
+            })
         
+        return data
+

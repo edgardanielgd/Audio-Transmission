@@ -28,7 +28,7 @@ class Ui_Frame(object):
         Frame.setStyleSheet(u"background-image: url(:/Background/chatbackground.jpg)")
         self.label = QLabel(Frame)
         self.label.setObjectName(u"label")
-        self.label.setGeometry(QRect(210, 10, 141, 20))
+        self.label.setGeometry(QRect(210, 10, 141, 31))
         palette = QPalette()
         brush = QBrush(QColor(255, 255, 255, 255))
         brush.setStyle(Qt.SolidPattern)
@@ -172,7 +172,7 @@ class Ui_Frame(object):
 
         self.retranslateUi(Frame)
 
-        self.tabWidget.setCurrentIndex(1)
+        self.tabWidget.setCurrentIndex(0)
 
 
         QMetaObject.connectSlotsByName(Frame)

@@ -4,7 +4,7 @@ from PySide6 import QtCore, QtGui, QtWidgets
 from PySide6.QtWidgets import QDialog, QApplication, QMainWindow, QFileDialog, QMessageBox
 import sys
 
-initial_users = [ "Jhonatan", "Edgar", "Miguel" ]
+initial_users = [ "Edgar" ]
 users = []
 
 # Construct a QApplication
@@ -26,4 +26,3 @@ mainChat.show()
 
 # Run the event loop
 sys.exit(app.exec())
-

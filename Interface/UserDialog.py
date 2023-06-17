@@ -15,16 +15,16 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QFrame, QLabel, QPlainTextEdit,
-    QPushButton, QScrollArea, QSizePolicy, QTextEdit,
-    QVBoxLayout, QWidget)
+from PySide6.QtWidgets import (QApplication, QComboBox, QFrame, QLabel,
+    QPlainTextEdit, QPushButton, QScrollArea, QSizePolicy,
+    QTextEdit, QVBoxLayout, QWidget)
 import ChatterBackground_rc
 
 class Ui_Frame(object):
     def setupUi(self, Frame):
         if not Frame.objectName():
             Frame.setObjectName(u"Frame")
-        Frame.resize(510, 430)
+        Frame.resize(510, 422)
         palette = QPalette()
         brush = QBrush(QColor(0, 0, 0, 255))
         brush.setStyle(Qt.SolidPattern)
@@ -166,7 +166,7 @@ class Ui_Frame(object):
         self.label.setAlignment(Qt.AlignCenter)
         self.btnAudioRecord = QPushButton(Frame)
         self.btnAudioRecord.setObjectName(u"btnAudioRecord")
-        self.btnAudioRecord.setGeometry(QRect(20, 100, 56, 21))
+        self.btnAudioRecord.setGeometry(QRect(60, 140, 101, 21))
         palette2 = QPalette()
         palette2.setBrush(QPalette.Active, QPalette.WindowText, brush6)
         palette2.setBrush(QPalette.Active, QPalette.Button, brush)
@@ -206,13 +206,14 @@ class Ui_Frame(object):
 "}")
         self.txtMessageText = QPlainTextEdit(Frame)
         self.txtMessageText.setObjectName(u"txtMessageText")
-        self.txtMessageText.setGeometry(QRect(180, 90, 191, 40))
+        self.txtMessageText.setGeometry(QRect(300, 70, 191, 40))
         self.txtMessageText.setFont(font1)
         self.txtMessageText.setStyleSheet(u"background: none;\n"
-"background-color: black;")
+"background-color: black;\n"
+"color: white;")
         self.label_3 = QLabel(Frame)
         self.label_3.setObjectName(u"label_3")
-        self.label_3.setGeometry(QRect(180, 140, 191, 20))
+        self.label_3.setGeometry(QRect(300, 120, 191, 20))
         self.label_3.setStyleSheet(u"background: none;\n"
 "background-color: black;\n"
 "border-style: solid;\n"
@@ -222,7 +223,7 @@ class Ui_Frame(object):
         self.label_3.setAlignment(Qt.AlignCenter)
         self.btnSend = QPushButton(Frame)
         self.btnSend.setObjectName(u"btnSend")
-        self.btnSend.setGeometry(QRect(400, 100, 56, 17))
+        self.btnSend.setGeometry(QRect(380, 150, 71, 17))
         self.btnSend.setFont(font1)
         self.btnSend.setStyleSheet(u"QPushButton {\n"
 "	background: none;\n"
@@ -240,7 +241,7 @@ class Ui_Frame(object):
 "}")
         self.btnSendImage = QPushButton(Frame)
         self.btnSendImage.setObjectName(u"btnSendImage")
-        self.btnSendImage.setGeometry(QRect(100, 100, 61, 20))
+        self.btnSendImage.setGeometry(QRect(170, 140, 91, 20))
         self.btnSendImage.setFont(font1)
         self.btnSendImage.setStyleSheet(u"QPushButton {\n"
 "	background: none;\n"
@@ -304,20 +305,21 @@ class Ui_Frame(object):
         self.verticalLayout = QVBoxLayout(self.verticalLayoutWidget)
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.verticalLayout.setContentsMargins(0, 0, 0, 0)
-        self.label_2 = QLabel(self.verticalLayoutWidget)
-        self.label_2.setObjectName(u"label_2")
-        self.label_2.setStyleSheet(u"background: none;\n"
+        self.cnvLog = QLabel(self.verticalLayoutWidget)
+        self.cnvLog.setObjectName(u"cnvLog")
+        self.cnvLog.setStyleSheet(u"background: none;\n"
 "background-color: white;")
 
-        self.verticalLayout.addWidget(self.label_2)
+        self.verticalLayout.addWidget(self.cnvLog)
 
         self.scrollArea.setWidget(self.scrollAreaWidgetContents)
-        self.textEdit = QTextEdit(Frame)
-        self.textEdit.setObjectName(u"textEdit")
-        self.textEdit.setGeometry(QRect(20, 340, 451, 71))
-        self.textEdit.setStyleSheet(u"background: none;\n"
-"background-color: black;")
-        self.textEdit.setReadOnly(True)
+        self.txtLog = QTextEdit(Frame)
+        self.txtLog.setObjectName(u"txtLog")
+        self.txtLog.setGeometry(QRect(20, 340, 451, 71))
+        self.txtLog.setStyleSheet(u"background: none;\n"
+"background-color: black;\n"
+"color: white;")
+        self.txtLog.setReadOnly(True)
         self.label_4 = QLabel(Frame)
         self.label_4.setObjectName(u"label_4")
         self.label_4.setGeometry(QRect(20, 170, 191, 20))
@@ -328,6 +330,22 @@ class Ui_Frame(object):
 "border-width: 1px;\n"
 "color: white;")
         self.label_4.setAlignment(Qt.AlignCenter)
+        self.cmbEncoders = QComboBox(Frame)
+        self.cmbEncoders.setObjectName(u"cmbEncoders")
+        self.cmbEncoders.setGeometry(QRect(100, 100, 111, 22))
+        self.cmbEncoders.setStyleSheet(u"background: none;\n"
+"background-color: gray;\n"
+"color: black;")
+        self.label_5 = QLabel(Frame)
+        self.label_5.setObjectName(u"label_5")
+        self.label_5.setGeometry(QRect(40, 70, 231, 20))
+        self.label_5.setStyleSheet(u"background: none;\n"
+"background-color: black;\n"
+"border-style: solid;\n"
+"border-color: white;\n"
+"border-width: 1px;\n"
+"color: white;")
+        self.label_5.setAlignment(Qt.AlignCenter)
 
         self.retranslateUi(Frame)
 
@@ -342,7 +360,8 @@ class Ui_Frame(object):
         self.btnSend.setText(QCoreApplication.translate("Frame", u"Enviar", None))
         self.btnSendImage.setText(QCoreApplication.translate("Frame", u"Enviar imagen", None))
         self.lblUsername.setText(QCoreApplication.translate("Frame", u"Username", None))
-        self.label_2.setText("")
+        self.cnvLog.setText("")
         self.label_4.setText(QCoreApplication.translate("Frame", u"Logs", None))
+        self.label_5.setText(QCoreApplication.translate("Frame", u"Selecciona el codificador a usar", None))
     # retranslateUi
 

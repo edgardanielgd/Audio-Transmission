@@ -20,3 +20,9 @@ def configStyleSheet( recording ):
             border-color: { "black" if not recording else "white"};
         }}
     """
+
+def registerLog( text, control ):
+    # Append the text to the log (Control is a QTextEdit)
+    control.append( text )
+    # Scroll to the bottom
+    control.verticalScrollBar().setValue(control.verticalScrollBar().maximum())
