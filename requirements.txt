@@ -1,0 +1,6 @@
+pillow>=9.4.0
+librosa>=0.8.1
+numpy>=1.21.6
+pyside6>=6.5.1.1
+# Wave should be already installed
+pyaudio>=0.2.13
