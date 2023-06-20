@@ -18,7 +18,7 @@ def paintCodificationTree( tree, canvas ):
 
     # Set font size
     font = QtGui.QFont()
-    font.setPixelSize( 12 )
+    font.setPixelSize( 20 )
     painter.setFont( font )
     
     # Draw tree
@@ -66,3 +66,4 @@ def drawNode( painter, node, x, y, max_width = -1, max_height = -1 ):
 
         given_width, given_height = drawNode( painter, node.right, x + 50, y + 50 )
     
+    return max_width, max_height

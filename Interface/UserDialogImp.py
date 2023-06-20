@@ -46,6 +46,8 @@ class UserDialog(QDialog, Ui_Frame):
 
     def send(self):
 
+        registerLog( "Enviando texto", self.txtLog )
+
         # Parse text to numbers
         vector = Text.convertTextToVector( self.txtMessageText.toPlainText() )
 
