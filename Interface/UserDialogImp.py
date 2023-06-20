@@ -9,6 +9,7 @@ from Utils.Drawings.HuffmanTree import paintCodificationTree
 import pyaudio
 import wave
 import numpy as np
+from Utils.ErrorControl import codificar_palabra
 
 class UserDialog(QDialog, Ui_Frame):
     def __init__(self, parentChat, username ):
@@ -172,6 +173,18 @@ class UserDialog(QDialog, Ui_Frame):
 
             # Encode data with huffman
             encoding_tree, bits_encoded, root = Huffman.encode_huffman( data )
+
+            # Error control code
+
+            bits_encoded = [ int(x) for x in bits_encoded ]
+            
+            if len(bits_encoded) % 3 != 0:
+                # We need to add some bits to make it divisible by 3
+                bits_encoded += [0] * ( 3 - len(bits_encoded) % 3 )
+            
+            bits_encoded = codificar_palabra(bits_encoded)
+
+            bits_encoded = bits_encoded.tolist()
 
             # We have all needed info to decode this data on
             # Main Chat wiew

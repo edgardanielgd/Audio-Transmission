@@ -9,6 +9,7 @@ from PIL.ImageQt import ImageQt
 from Utils import Audio, Images, Text, Huffman
 from Utils.Misc import *
 from AudioPlayer import AudioPlayer
+from Utils.ErrorControl import decodificar_palabra
 
 import PySide6.QtWidgets as QtWidgets
 import pyaudio
@@ -148,10 +149,21 @@ class MainChat(QDialog, Ui_Frame):
         username = data["username"]
 
         if method == "Huffman":
+            # Remove error control data
+            bits = data["data"]
+            bits, logs = decodificar_palabra( bits )
+
+            for log in logs:
+                registerLog( log, self.txtGeneralChatLogs)
+            
+            bits = bits.tolist()
+
+            # Binary list to string
+            bits = "".join( [ str(x) for x in bits ] )
 
             # Get additional data
             encoding_tree = data["encoding_tree"]
-            decoded_data = Huffman.decode_huffman_input( encoding_tree, data["data"] )
+            decoded_data = Huffman.decode_huffman_input( encoding_tree, bits )
 
         
         # Having data decoded, re shape and format to correct media type
