@@ -35,7 +35,7 @@ class Ui_Form(object):
         self.lblUsername.setAlignment(Qt.AlignCenter)
         self.frmData = QFrame(Form)
         self.frmData.setObjectName(u"frmData")
-        self.frmData.setGeometry(QRect(70, 10, 14, 14))
+        self.frmData.setGeometry(QRect(70, 10, 201, 51))
         self.frmData.setStyleSheet(u"color: white;\n"
 "background: none;\n"
 "background:transparent;")

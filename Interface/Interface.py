@@ -4,7 +4,7 @@ from PySide6 import QtCore, QtGui, QtWidgets
 from PySide6.QtWidgets import QDialog, QApplication, QMainWindow, QFileDialog, QMessageBox
 import sys
 
-initial_users = [ "Edgar" ]
+initial_users = [ "Edgar", "Jhonatan" ]
 users = []
 
 # Construct a QApplication

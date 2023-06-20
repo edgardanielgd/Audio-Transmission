@@ -124,7 +124,7 @@ class UserDialog(QDialog, Ui_Frame):
 
     def audioRecordcallback(self, data, frame_count, time_info, status):
         data = np.fromstring(data, 'int16')
-        self.frames.append(data)
+        self.frames.extend(data)
         return None, pyaudio.paContinue
 
     def encodeData(self, data, **kwargs):
@@ -132,7 +132,7 @@ class UserDialog(QDialog, Ui_Frame):
         # We will take care of each method and use different encoding schemes
 
         method = self.cmbEncoders.currentText()
-        data = {
+        data_return = {
             "method" : method,
             "username" : self.username,
         }
@@ -145,10 +145,10 @@ class UserDialog(QDialog, Ui_Frame):
 
             # We have all needed info to decode this data on
             # Main Chat wiew
-            data.update( {
+            data_return.update( {
                 "data" : bits_encoded,
                 "encoding_tree" : encoding_tree
             })
         
-        return data
+        return data_return
 

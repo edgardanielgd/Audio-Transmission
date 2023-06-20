@@ -5,9 +5,10 @@ from multiprocessing import Process
 from PySide6.QtWidgets import QDialog
 from PySide6.QtGui import QImage, QPixmap
 from PySide6 import QtCore
-
+from PIL.ImageQt import ImageQt
 from Utils import Audio, Images, Text, Huffman
 from Utils.Misc import *
+from AudioPlayer import AudioPlayer
 
 import PySide6.QtWidgets as QtWidgets
 import pyaudio
@@ -114,9 +115,8 @@ class MainChat(QDialog, Ui_Frame):
     def addImage(self, username, imageObj ):
         # Create a new component for the image
         lbl = QtWidgets.QLabel(  )
-
-        qimage = QImage.fromData( imageObj.tobytes(), "PNG" )
-        qPixMap = QPixmap.fromImage( qimage )
+        pil2Qt = ImageQt( imageObj )
+        qPixMap = QPixmap.fromImage( pil2Qt )
         pixmapImage = QPixmap( qPixMap )
 
         lbl.setPixmap( pixmapImage )
@@ -132,29 +132,8 @@ class MainChat(QDialog, Ui_Frame):
     
     def playAudio(self, path):
         
-        p = pyaudio.PyAudio()
-
-        chunk = 1024
-        wf = wave.open(path, 'rb')
-
-        stream = p.open(
-                format = p.get_format_from_width(wf.getsampwidth()),
-                channels = wf.getnchannels(),
-                rate = wf.getframerate(),
-                output = True
-            )
-
-        # Read data in chunks
-        data = wf.readframes(chunk)
-
-        # Play the sound by writing the audio data to the stream
-        while data != '':
-            stream.write(data)
-            data = wf.readframes(chunk)
-
-        # Close and terminate the stream
-        stream.close()
-        p.terminate()
+        self.audio_player = AudioPlayer( path )
+        self.audio_player.start()
 
     def receiveData(self, data):
         # First than all, decode data depending on the encoding algorithm
@@ -167,26 +146,27 @@ class MainChat(QDialog, Ui_Frame):
 
             # Get additional data
             encoding_tree = data["encoding_tree"]
-            decoded_data = Huffman.decode_huffman_input( encoding_tree, data )
+            decoded_data = Huffman.decode_huffman_input( encoding_tree, data["data"] )
 
         
         # Having data decoded, re shape and format to correct media type
         if data["type"] == "text":
             text = Text.buildTextFromVector( decoded_data )
 
-            registerLog( "Recibiendo texto: " + text, self.txtLog)
+            registerLog( "Recibiendo texto: " + text, self.txtGeneralChatLogs)
 
             self.addText( username, text )
         elif data["type"] == "image":
+            print("pasa")
             image = Images.buildImageFromVector( decoded_data, data["width"], data["height"] )
 
-            registerLog( "Recibiendo imagen", self.txtLog)
+            registerLog( "Recibiendo imagen", self.txtGeneralChatLogs)
 
             self.addImage( username, image )
         elif data["type"] == "audio":
             audio = Audio.buildAudioFromVector( decoded_data, data["format"], data["channels"], data["rate"] )
 
-            registerLog( "Recibiendo audio", self.txtLog)
+            registerLog( "Recibiendo audio", self.txtGeneralChatLogs)
             
             self.receiveAudio( username, decoded_data["frames"], decoded_data["format"], decoded_data["channels"], decoded_data["rate"] )
             
