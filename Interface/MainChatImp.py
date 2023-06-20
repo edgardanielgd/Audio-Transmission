@@ -22,23 +22,10 @@ class MainChat(QDialog, Ui_Frame):
         self.OnAddChatter = OnAddChatter
         self.btnAddChatter.clicked.connect(self.addChatter)
 
-        # Add vertical layout to ChatBody
-        self.chatBody = QtWidgets.QScrollArea( self.tabChat )
-        self.chatBody.setWidgetResizable(True)
-
-        self.chatBodyContents = QtWidgets.QFrame()
         self.chatBodyContentsLayout = QtWidgets.QVBoxLayout()
         self.chatBodyContentsLayout.setContentsMargins( 0,0,0,0 )
         
-        self.chatBodyContents.setLayout( self.chatBodyContentsLayout )
-        self.chatBody.setWidget( self.chatBodyContents )
-        self.chatBody.setGeometry( 0,0,300,300 )
-        self.chatBodyContents.setGeometry( 0,0,300,300 )
-
-        # self.chatLayout.setAlignment( QtCore.Qt.AlignTop )
-        # self.chatLayout.setContentsMargins( 0,0,0,0 )
-        # self.chatLayout.setSpacing( 0 )
-        # self.chatLayout.addStretch(1)
+        self.ChatBodyContents.setLayout( self.chatBodyContentsLayout )
 
         # It is necessary to save a reference to the messages
         # in order to prevent garbage collector from deleting them
@@ -99,12 +86,6 @@ class MainChat(QDialog, Ui_Frame):
             """
         )
 
-        # Play the audio asynchronically
-
-        def asyncPlayAudio():
-            p = Process( target = self.playAudio, args = ( waveOutputFile, ) )
-            p.start()
-
         btn.clicked.connect(
             lambda : self.playAudio( waveOutputFile )
         )
@@ -112,7 +93,7 @@ class MainChat(QDialog, Ui_Frame):
         message = UserMessage( username, btn, self )
         
         # Add the component to ChatBody (Which is a scroll area)
-        self.MainLayout.addWidget( message )
+        self.chatBodyContentsLayout.addWidget( message )
 
     def addText(self, username, text ):
         # Create a new component for the text
@@ -128,13 +109,11 @@ class MainChat(QDialog, Ui_Frame):
             """
         )
 
-        message = UserMessage( username, lbl, None )
+        message = UserMessage( username, lbl, self.tabChat )
 
-        self.messages.append( message )
-
-        self.chatBodyContentsLayout.addWidget( message )
         # Add the component to ChatBody (Which is a scroll area)
-        # self.verticalLayout.addWidget( message )
+        self.chatBodyContentsLayout.addWidget( message )
+        
     
     def addImage(self, username, imageObj ):
         # Create a new component for the image
@@ -146,13 +125,15 @@ class MainChat(QDialog, Ui_Frame):
         lbl.setPixmap( pixmapImage )
         lbl.setAlignment( QtCore.Qt.AlignCenter )
         lbl.setScaledContents( True )
-        lbl.setMinimumSize( 1,1 )
-        lbl.show()
-
+        lbl.setFixedSize(
+            imageObj.width, imageObj.height
+        )
+        lbl.setSizePolicy( QtWidgets.QSizePolicy.Ignored, QtWidgets.QSizePolicy.Ignored )
+        
         message = UserMessage( username, lbl, self )
 
         # Add the component to ChatBody (Which is a scroll area)
-        self.MainLayout.addWidget( message )
+        self.chatBodyContentsLayout.addWidget( message )
     
     def playAudio(self, path):
         

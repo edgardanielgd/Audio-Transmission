@@ -5,6 +5,7 @@ from Utils import Audio, Images, Text, Huffman
 from Utils.Misc import *
 from PIL import Image
 from AudioPlayer import AudioPlayer
+from Utils.Drawings.HuffmanTree import paintCodificationTree
 import pyaudio
 import wave
 import numpy as np
@@ -85,8 +86,6 @@ class UserDialog(QDialog, Ui_Frame):
         # Parse text to numbers
         vector, width, height = Images.convertImageToVector( image )
 
-        print( vector.shape )
-
         data = self.encodeData( vector )
 
         data["type"] = "image"
@@ -154,7 +153,7 @@ class UserDialog(QDialog, Ui_Frame):
         logCanvas = self.cnvLog
 
         # Create a pixmap where we will draw into
-        pixmap = QtGui.QPixmap( logCanvas.size() )
+        paintCodificationTree( rootNode, logCanvas )
     
     def encodeData(self, data, **kwargs):
         # Data should come as a numpy array of discrete values
