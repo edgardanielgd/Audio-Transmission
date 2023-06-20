@@ -1,8 +1,10 @@
 from UserDialog import Ui_Frame
 from PySide6.QtWidgets import QDialog, QFileDialog
+from PySide6 import QtCore, QtGui, QtWidgets
 from Utils import Audio, Images, Text, Huffman
 from Utils.Misc import *
 from PIL import Image
+from AudioPlayer import AudioPlayer
 import pyaudio
 import wave
 import numpy as np
@@ -81,21 +83,31 @@ class UserDialog(QDialog, Ui_Frame):
         image = Image.open( path )
 
         # Parse text to numbers
-        vector = Images.convertImageToVector( image )
+        vector, width, height = Images.convertImageToVector( image )
+
+        print( vector.shape )
+
+        data = self.encodeData( vector )
+
+        data["type"] = "image"
+        data["width"] = width
+        data["height"] = height
+
+        self.parentChat.receiveData( data )
         
         # Send the image
-        self.parentChat.addImage( self.username, image )
+        # self.parentChat.addImage( self.username, image )
 
     def audioRecord(self):
         if self.recording :
             # Call parent receiver for this info
-            self.parentChat.receiveAudio( 
-                self.username, self.frames, 
-                self.FORMAT, self.CHANNELS, self.RATE 
-            )
+            # self.parentChat.receiveAudio( 
+            #     self.username, self.frames, 
+            #     self.FORMAT, self.CHANNELS, self.RATE 
+            # )
 
             # Parse audio to levels
-            levels, quantification_dict = Audio.convertAudioToVector( self.frames )
+            levels, quantification_dict = Audio.convertAudioToVector( self.frames, 32 )
 
             self.stream.stop_stream()
             self.stream.close()
@@ -104,6 +116,16 @@ class UserDialog(QDialog, Ui_Frame):
             self.stream = None
             self.p = None
             self.frames = []
+
+            # Send data to receptor
+            data = self.encodeData( levels )
+            data["type"] = "audio"
+            data["quantification_dict"] = quantification_dict
+            data["format"] = self.FORMAT
+            data["channels"] = self.CHANNELS
+            data["rate"] = self.RATE
+
+            self.parentChat.receiveData( data )
 
             self.btnAudioRecord.setText("Grabar Audio")
         else:
@@ -127,6 +149,13 @@ class UserDialog(QDialog, Ui_Frame):
         self.frames.extend(data)
         return None, pyaudio.paContinue
 
+    def graphHuffman(self, rootNode ):
+        # Get canvas
+        logCanvas = self.cnvLog
+
+        # Create a pixmap where we will draw into
+        pixmap = QtGui.QPixmap( logCanvas.size() )
+    
     def encodeData(self, data, **kwargs):
         # Data should come as a numpy array of discrete values
         # We will take care of each method and use different encoding schemes
@@ -141,7 +170,7 @@ class UserDialog(QDialog, Ui_Frame):
             # Huffman encoding
 
             # Encode data with huffman
-            encoding_tree, bits_encoded = Huffman.encode_huffman( data )
+            encoding_tree, bits_encoded, root = Huffman.encode_huffman( data )
 
             # We have all needed info to decode this data on
             # Main Chat wiew
@@ -149,6 +178,9 @@ class UserDialog(QDialog, Ui_Frame):
                 "data" : bits_encoded,
                 "encoding_tree" : encoding_tree
             })
+
+            # Log Huffman tree as a graph
+            self.graphHuffman( root )
         
         return data_return
 

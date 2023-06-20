@@ -15,16 +15,16 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QFrame, QLabel, QLayout,
-    QPushButton, QScrollArea, QSizePolicy, QTabWidget,
-    QTextEdit, QVBoxLayout, QWidget)
+from PySide6.QtWidgets import (QApplication, QFrame, QLabel, QPushButton,
+    QScrollArea, QSizePolicy, QTabWidget, QTextEdit,
+    QVBoxLayout, QWidget)
 import ChatterBackground_rc
 
 class Ui_Frame(object):
     def setupUi(self, Frame):
         if not Frame.objectName():
             Frame.setObjectName(u"Frame")
-        Frame.resize(515, 424)
+        Frame.resize(493, 428)
         Frame.setStyleSheet(u"background-image: url(:/Background/chatbackground.jpg)")
         self.label = QLabel(Frame)
         self.label.setObjectName(u"label")
@@ -94,29 +94,9 @@ class Ui_Frame(object):
         self.label.setAlignment(Qt.AlignCenter)
         self.tabWidget = QTabWidget(Frame)
         self.tabWidget.setObjectName(u"tabWidget")
-        self.tabWidget.setGeometry(QRect(20, 30, 471, 341))
+        self.tabWidget.setGeometry(QRect(10, 40, 451, 321))
         self.tabWidget.setStyleSheet(u"background: none;\n"
 "background-color: black;")
-        self.tabChat = QWidget()
-        self.tabChat.setObjectName(u"tabChat")
-        self.ChatBody = QScrollArea(self.tabChat)
-        self.ChatBody.setObjectName(u"ChatBody")
-        self.ChatBody.setGeometry(QRect(10, 10, 441, 291))
-        self.ChatBody.setStyleSheet(u"")
-        self.ChatBody.setWidgetResizable(True)
-        self.scrollAreaWidgetContents = QWidget()
-        self.scrollAreaWidgetContents.setObjectName(u"scrollAreaWidgetContents")
-        self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 439, 289))
-        self.verticalLayout = QVBoxLayout(self.scrollAreaWidgetContents)
-        self.verticalLayout.setObjectName(u"verticalLayout")
-        self.MainLayout = QVBoxLayout()
-        self.MainLayout.setObjectName(u"MainLayout")
-        self.MainLayout.setSizeConstraint(QLayout.SetFixedSize)
-
-        self.verticalLayout.addLayout(self.MainLayout)
-
-        self.ChatBody.setWidget(self.scrollAreaWidgetContents)
-        self.tabWidget.addTab(self.tabChat, "")
         self.tabLogs = QWidget()
         self.tabLogs.setObjectName(u"tabLogs")
         self.scrollArea = QScrollArea(self.tabLogs)
@@ -146,6 +126,9 @@ class Ui_Frame(object):
         self.txtGeneralChatLogs.setStyleSheet(u"color: white;")
         self.txtGeneralChatLogs.setReadOnly(True)
         self.tabWidget.addTab(self.tabLogs, "")
+        self.tabChat = QWidget()
+        self.tabChat.setObjectName(u"tabChat")
+        self.tabWidget.addTab(self.tabChat, "")
         self.btnAddChatter = QPushButton(Frame)
         self.btnAddChatter.setObjectName(u"btnAddChatter")
         self.btnAddChatter.setGeometry(QRect(350, 380, 111, 30))
@@ -172,7 +155,7 @@ class Ui_Frame(object):
 
         self.retranslateUi(Frame)
 
-        self.tabWidget.setCurrentIndex(0)
+        self.tabWidget.setCurrentIndex(1)
 
 
         QMetaObject.connectSlotsByName(Frame)
@@ -181,9 +164,9 @@ class Ui_Frame(object):
     def retranslateUi(self, Frame):
         Frame.setWindowTitle(QCoreApplication.translate("Frame", u"Main Chat", None))
         self.label.setText(QCoreApplication.translate("Frame", u"<html><head/><body><p><span style=\" font-size:12pt; color:#ffffff;\">Chat Principal</span></p></body></html>", None))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tabChat), QCoreApplication.translate("Frame", u"Chat", None))
         self.drwGeneralChatsLog.setText("")
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tabLogs), QCoreApplication.translate("Frame", u"Logs", None))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tabChat), QCoreApplication.translate("Frame", u"Chat", None))
         self.btnAddChatter.setText(QCoreApplication.translate("Frame", u"A\u00f1adir Miembro", None))
     # retranslateUi
 

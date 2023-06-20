@@ -16,7 +16,7 @@ def buildAudioFromVector( data, parsing_dict ):
     decoded_signal = np.array(list(map(
       lambda x: parsing_dict[ x ], # Level to signal value
       data
-    )), dtype=np.float32)
+    )), dtype=np.int16)
 
     return decoded_signal
 

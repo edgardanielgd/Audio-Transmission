@@ -21,6 +21,28 @@ class MainChat(QDialog, Ui_Frame):
         self.setupUi(self)
         self.OnAddChatter = OnAddChatter
         self.btnAddChatter.clicked.connect(self.addChatter)
+
+        # Add vertical layout to ChatBody
+        self.chatBody = QtWidgets.QScrollArea( self.tabChat )
+        self.chatBody.setWidgetResizable(True)
+
+        self.chatBodyContents = QtWidgets.QFrame()
+        self.chatBodyContentsLayout = QtWidgets.QVBoxLayout()
+        self.chatBodyContentsLayout.setContentsMargins( 0,0,0,0 )
+        
+        self.chatBodyContents.setLayout( self.chatBodyContentsLayout )
+        self.chatBody.setWidget( self.chatBodyContents )
+        self.chatBody.setGeometry( 0,0,300,300 )
+        self.chatBodyContents.setGeometry( 0,0,300,300 )
+
+        # self.chatLayout.setAlignment( QtCore.Qt.AlignTop )
+        # self.chatLayout.setContentsMargins( 0,0,0,0 )
+        # self.chatLayout.setSpacing( 0 )
+        # self.chatLayout.addStretch(1)
+
+        # It is necessary to save a reference to the messages
+        # in order to prevent garbage collector from deleting them
+        self.messages = []
     
     def addChatter(self):
         # Add a new chatter to the conversation, we will just create 
@@ -97,7 +119,6 @@ class MainChat(QDialog, Ui_Frame):
         lbl = QtWidgets.QLabel(  )
         lbl.setText( text )
         lbl.setWordWrap(True)
-        lbl.setFixedWidth( self.ChatBody.width() - 20 )
         lbl.setFixedHeight( lbl.sizeHint().height() )   
         lbl.setStyleSheet(
             """
@@ -107,10 +128,13 @@ class MainChat(QDialog, Ui_Frame):
             """
         )
 
-        message = UserMessage( username, lbl, self )
-        
+        message = UserMessage( username, lbl, None )
+
+        self.messages.append( message )
+
+        self.chatBodyContentsLayout.addWidget( message )
         # Add the component to ChatBody (Which is a scroll area)
-        self.MainLayout.addWidget( message )
+        # self.verticalLayout.addWidget( message )
     
     def addImage(self, username, imageObj ):
         # Create a new component for the image
@@ -156,17 +180,25 @@ class MainChat(QDialog, Ui_Frame):
             registerLog( "Recibiendo texto: " + text, self.txtGeneralChatLogs)
 
             self.addText( username, text )
-        elif data["type"] == "image":
-            print("pasa")
-            image = Images.buildImageFromVector( decoded_data, data["width"], data["height"] )
 
-            registerLog( "Recibiendo imagen", self.txtGeneralChatLogs)
+        elif data["type"] == "image":
+            width = data["width"]
+            height = data["height"]
+            
+            image = Images.buildImageFromVector( decoded_data, width, height )
+
+            registerLog( "Recibiendo imagen: ", self.txtGeneralChatLogs)
 
             self.addImage( username, image )
         elif data["type"] == "audio":
-            audio = Audio.buildAudioFromVector( decoded_data, data["format"], data["channels"], data["rate"] )
+            audio = Audio.buildAudioFromVector( 
+                decoded_data, data["quantification_dict"]
+            )
 
             registerLog( "Recibiendo audio", self.txtGeneralChatLogs)
             
-            self.receiveAudio( username, decoded_data["frames"], decoded_data["format"], decoded_data["channels"], decoded_data["rate"] )
+            self.receiveAudio( 
+                username, audio, data["format"], 
+                data["channels"], data["rate"] 
+            )
             

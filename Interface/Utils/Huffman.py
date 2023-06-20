@@ -132,14 +132,14 @@ def build_huffman_tree(
   # Visit parent node at all
   visitNode( queue2[0], "" )
 
-  return final_encodings
+  return final_encodings, queue2[0]
 
 # Encode data with gotten huffman tree
 def encode_huffman(
   data
 ):
   # First, build huffman tree for this input
-  encoding_tree = build_huffman_tree( data )
+  encoding_tree, root_node = build_huffman_tree( data )
   bits_encoded = ""
 
   # Simulate the most hardcore signal: A string of bits
@@ -147,7 +147,7 @@ def encode_huffman(
     bits = encoding_tree[ item ]
     bits_encoded += bits
 
-  return encoding_tree, bits_encoded
+  return encoding_tree, bits_encoded, root_node
 
 # Do huffman decodification
 def decode_huffman_input(

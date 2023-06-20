@@ -22,12 +22,12 @@ class Ui_Form(object):
     def setupUi(self, Form):
         if not Form.objectName():
             Form.setObjectName(u"Form")
-        Form.resize(281, 62)
+        Form.resize(398, 67)
         Form.setStyleSheet(u"background-color: black;\n"
 "border-radius: 10px;")
         self.lblUsername = QLabel(Form)
         self.lblUsername.setObjectName(u"lblUsername")
-        self.lblUsername.setGeometry(QRect(10, 20, 51, 16))
+        self.lblUsername.setGeometry(QRect(10, 20, 91, 31))
         self.lblUsername.setStyleSheet(u"color: white;\n"
 "border-color: white;\n"
 "border-style: solid;\n"
@@ -35,10 +35,11 @@ class Ui_Form(object):
         self.lblUsername.setAlignment(Qt.AlignCenter)
         self.frmData = QFrame(Form)
         self.frmData.setObjectName(u"frmData")
-        self.frmData.setGeometry(QRect(70, 10, 201, 51))
+        self.frmData.setGeometry(QRect(110, 10, 281, 51))
         self.frmData.setStyleSheet(u"color: white;\n"
 "background: none;\n"
-"background:transparent;")
+"background:transparent;\n"
+"padding:0;")
         self.frmData.setFrameShape(QFrame.StyledPanel)
         self.frmData.setFrameShadow(QFrame.Raised)
         self.verticalLayout = QVBoxLayout(self.frmData)

@@ -12,7 +12,7 @@ app = QApplication([])
 # Create a window and show it
 
 OnAddChatter = lambda a : users.append( a )
-
+    
 # Create a main chat window
 mainChat = MainChat( OnAddChatter )
 
