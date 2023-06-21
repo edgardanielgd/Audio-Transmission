@@ -241,7 +241,7 @@ class Ui_Frame(object):
 "}")
         self.btnSendImage = QPushButton(Frame)
         self.btnSendImage.setObjectName(u"btnSendImage")
-        self.btnSendImage.setGeometry(QRect(170, 140, 91, 20))
+        self.btnSendImage.setGeometry(QRect(170, 140, 91, 21))
         self.btnSendImage.setFont(font1)
         self.btnSendImage.setStyleSheet(u"QPushButton {\n"
 "	background: none;\n"
@@ -292,30 +292,29 @@ class Ui_Frame(object):
         self.lblUsername.setAlignment(Qt.AlignCenter)
         self.scrollArea = QScrollArea(Frame)
         self.scrollArea.setObjectName(u"scrollArea")
-        self.scrollArea.setGeometry(QRect(20, 200, 451, 131))
+        self.scrollArea.setGeometry(QRect(30, 200, 441, 131))
         self.scrollArea.setStyleSheet(u"background: none;\n"
 "background-color: black;")
         self.scrollArea.setWidgetResizable(True)
         self.scrollAreaWidgetContents = QWidget()
         self.scrollAreaWidgetContents.setObjectName(u"scrollAreaWidgetContents")
-        self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 449, 129))
-        self.verticalLayoutWidget = QWidget(self.scrollAreaWidgetContents)
-        self.verticalLayoutWidget.setObjectName(u"verticalLayoutWidget")
-        self.verticalLayoutWidget.setGeometry(QRect(10, 10, 431, 111))
-        self.verticalLayout = QVBoxLayout(self.verticalLayoutWidget)
+        self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 439, 129))
+        self.verticalLayout = QVBoxLayout(self.scrollAreaWidgetContents)
         self.verticalLayout.setObjectName(u"verticalLayout")
-        self.verticalLayout.setContentsMargins(0, 0, 0, 0)
-        self.cnvLog = QLabel(self.verticalLayoutWidget)
+        self.logContainer = QFrame(self.scrollAreaWidgetContents)
+        self.logContainer.setObjectName(u"logContainer")
+        self.logContainer.setFrameShape(QFrame.StyledPanel)
+        self.logContainer.setFrameShadow(QFrame.Raised)
+        self.cnvLog = QLabel(self.logContainer)
         self.cnvLog.setObjectName(u"cnvLog")
-        self.cnvLog.setStyleSheet(u"background: none;\n"
-"background-color: white;")
+        self.cnvLog.setGeometry(QRect(0, 0, 421, 111))
 
-        self.verticalLayout.addWidget(self.cnvLog)
+        self.verticalLayout.addWidget(self.logContainer)
 
         self.scrollArea.setWidget(self.scrollAreaWidgetContents)
         self.txtLog = QTextEdit(Frame)
         self.txtLog.setObjectName(u"txtLog")
-        self.txtLog.setGeometry(QRect(20, 340, 451, 71))
+        self.txtLog.setGeometry(QRect(30, 340, 441, 71))
         self.txtLog.setStyleSheet(u"background: none;\n"
 "background-color: black;\n"
 "color: white;")
@@ -360,7 +359,7 @@ class Ui_Frame(object):
         self.btnSend.setText(QCoreApplication.translate("Frame", u"Enviar", None))
         self.btnSendImage.setText(QCoreApplication.translate("Frame", u"Enviar imagen", None))
         self.lblUsername.setText(QCoreApplication.translate("Frame", u"Username", None))
-        self.cnvLog.setText("")
+        self.cnvLog.setText(QCoreApplication.translate("Frame", u"TextLabel", None))
         self.label_4.setText(QCoreApplication.translate("Frame", u"Logs", None))
         self.label_5.setText(QCoreApplication.translate("Frame", u"Selecciona el codificador a usar", None))
     # retranslateUi

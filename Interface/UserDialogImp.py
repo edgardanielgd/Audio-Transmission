@@ -23,6 +23,11 @@ class UserDialog(QDialog, Ui_Frame):
         self.btnSendImage.clicked.connect(self.sendImage)
         self.btnAudioRecord.clicked.connect(self.audioRecord)
 
+        # Create vertical layout for log
+        self.logLayout = QtWidgets.QVBoxLayout()
+        self.logLayout.setContentsMargins( 0,0,0,0 )
+        self.logContainer.setLayout( self.logLayout )
+        
         # Fill up combobox with possible options
         self.cmbEncoders.addItems( [
             "Huffman"
@@ -95,9 +100,6 @@ class UserDialog(QDialog, Ui_Frame):
         data["height"] = height
 
         self.parentChat.receiveData( data )
-        
-        # Send the image
-        # self.parentChat.addImage( self.username, image )
 
     def audioRecord(self):
         if self.recording :
@@ -155,7 +157,7 @@ class UserDialog(QDialog, Ui_Frame):
         logCanvas = self.cnvLog
 
         # Create a pixmap where we will draw into
-        paintCodificationTree( rootNode, logCanvas )
+        paintCodificationTree( rootNode, self.logContainer, self.logLayout )
     
     def encodeData(self, data, **kwargs):
         # Data should come as a numpy array of discrete values

@@ -1222,7 +1222,7 @@ QPushButton:hover {
      <x>170</x>
      <y>140</y>
      <width>91</width>
-     <height>20</height>
+     <height>21</height>
     </rect>
    </property>
    <property name="font">
@@ -1454,9 +1454,9 @@ background: transparent;</string>
   <widget class="QScrollArea" name="scrollArea">
    <property name="geometry">
     <rect>
-     <x>20</x>
+     <x>30</x>
      <y>200</y>
-     <width>451</width>
+     <width>441</width>
      <height>131</height>
     </rect>
    </property>
@@ -1472,41 +1472,30 @@ background-color: black;</string>
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>449</width>
+      <width>439</width>
       <height>129</height>
      </rect>
     </property>
-    <widget class="QWidget" name="verticalLayoutWidget">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>10</y>
-       <width>431</width>
-       <height>111</height>
-      </rect>
-     </property>
-     <layout class="QVBoxLayout" name="verticalLayout">
-      <item>
-       <widget class="QLabel" name="cnvLog">
-        <property name="styleSheet">
-         <string notr="true">background: none;
-background-color: white;</string>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <widget class="QFrame" name="logContainer">
+       <property name="frameShape">
+        <enum>QFrame::StyledPanel</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Raised</enum>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </widget>
   </widget>
   <widget class="QTextEdit" name="txtLog">
    <property name="geometry">
     <rect>
-     <x>20</x>
+     <x>30</x>
      <y>340</y>
-     <width>451</width>
+     <width>441</width>
      <height>71</height>
     </rect>
    </property>
