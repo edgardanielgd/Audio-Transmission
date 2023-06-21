@@ -305,9 +305,6 @@ class Ui_Frame(object):
         self.logContainer.setObjectName(u"logContainer")
         self.logContainer.setFrameShape(QFrame.StyledPanel)
         self.logContainer.setFrameShadow(QFrame.Raised)
-        self.cnvLog = QLabel(self.logContainer)
-        self.cnvLog.setObjectName(u"cnvLog")
-        self.cnvLog.setGeometry(QRect(0, 0, 421, 111))
 
         self.verticalLayout.addWidget(self.logContainer)
 
@@ -345,6 +342,11 @@ class Ui_Frame(object):
 "border-width: 1px;\n"
 "color: white;")
         self.label_5.setAlignment(Qt.AlignCenter)
+        self.label_2 = QLabel(Frame)
+        self.label_2.setObjectName(u"label_2")
+        self.label_2.setGeometry(QRect(300, 180, 161, 16))
+        self.label_2.setStyleSheet(u"background: none;\n"
+"background: transparent;")
 
         self.retranslateUi(Frame)
 
@@ -359,8 +361,8 @@ class Ui_Frame(object):
         self.btnSend.setText(QCoreApplication.translate("Frame", u"Enviar", None))
         self.btnSendImage.setText(QCoreApplication.translate("Frame", u"Enviar imagen", None))
         self.lblUsername.setText(QCoreApplication.translate("Frame", u"Username", None))
-        self.cnvLog.setText(QCoreApplication.translate("Frame", u"TextLabel", None))
         self.label_4.setText(QCoreApplication.translate("Frame", u"Logs", None))
         self.label_5.setText(QCoreApplication.translate("Frame", u"Selecciona el codificador a usar", None))
+        self.label_2.setText(QCoreApplication.translate("Frame", u"<html><head/><body><p><a href=\"https://elcodigoascii.com.ar/\">Tabla ASCII</a></p></body></html>", None))
     # retranslateUi
 

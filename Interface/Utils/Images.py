@@ -23,7 +23,7 @@ def buildImageFromVector( data, width, height ):
     # converted to bytes
     
     # Convert to 3D array
-    data = np.array(data)
+    data = np.array(data)[:width*height*3] # Error checkings could leave trailing zeros
     img = data.reshape( (height, width, 3) )
 
     # Convert to image

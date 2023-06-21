@@ -131,7 +131,7 @@ class MainChat(QDialog, Ui_Frame):
         )
         lbl.setSizePolicy( QtWidgets.QSizePolicy.Ignored, QtWidgets.QSizePolicy.Ignored )
         
-        message = UserMessage( username, lbl, self )
+        message = UserMessage( username, lbl, self, True )
 
         # Add the component to ChatBody (Which is a scroll area)
         self.chatBodyContentsLayout.addWidget( message )
@@ -151,15 +151,18 @@ class MainChat(QDialog, Ui_Frame):
         if method == "Huffman":
             # Remove error control data
             bits = data["data"]
+            
             bits, logs = decodificar_palabra( bits )
-
+            
             for log in logs:
                 registerLog( log, self.txtGeneralChatLogs)
             
             bits = bits.tolist()
+            
 
             # Binary list to string
             bits = "".join( [ str(x) for x in bits ] )
+            print("Decoded: ", len(bits))
 
             # Get additional data
             encoding_tree = data["encoding_tree"]

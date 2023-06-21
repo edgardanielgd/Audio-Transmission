@@ -11,9 +11,7 @@ def paintCodificationTree( tree, canvasParent, canvasLayout ):
     deep = get_deeper_length( tree )
     last_level_count = 2**deep - 1
     width = last_level_count * 20
-    height = (2*deep-1) * 20
-
-    print( width, height )
+    height = deep*20 + (deep-1)*30
     
     # Create a pixmap where we will draw into
     pixmap = QtGui.QPixmap( width, height )
@@ -29,19 +27,18 @@ def paintCodificationTree( tree, canvasParent, canvasLayout ):
 
     # Set font size
     font = QtGui.QFont()
-    font.setPixelSize( 20 )
+    font.setPixelSize( 12 )
     painter.setFont( font )
-
-    painter.drawEllipse(0,0,20,20)
 
     # We need to keep track of greater width and height in order
     # to resize label as soon we finish the printing process
-    drawNode( painter, tree, width//2 + 1, 0, deep )
+    drawNode( painter, tree, (last_level_count//2)*20, 0, deep - 1 )
+    #painter.drawEllipse( width//2 + 20, 0, 20, 20 )
 
     # Resize label
     label = QtWidgets.QLabel()
     # label.setFixedSize( max_width - min_width + 20, max_height + 20 )
-    label.setFixedSize( width, deep )
+    label.setFixedSize( width, height )
 
     # Set pixmap
     label.setPixmap( pixmap )
@@ -53,27 +50,28 @@ def paintCodificationTree( tree, canvasParent, canvasLayout ):
     del painter
 
 def drawNode( painter, node, x, y, height ):
-    # Draw node
+
+    # Draw circle
     painter.drawEllipse( x, y, 20, 20 )
     
     # Draw text
-    painter.drawText( x + 5, y + 20, str( node.leafValue if node.leafValue is not None else " " ) )
+    painter.drawText( x, y + 30, str( node.leafValue if node.leafValue is not None else " " ) )
     
     # Draw left child
     if node.left != None:
         painter.drawLine( x + 10, y + 20, x - 20 * 2**(height-1) + 10, y + 30 )
 
         # Draw associated code
-        painter.drawText( x - 10* 2**(height-1) , y + 10, "1" )
+        painter.drawText( x - 10* 2**(height-1) , y + 20, "1" )
 
         drawNode( painter, node.left, x - 20 * 2**(height-1), y + 30, height - 1 )
 
     
     # Draw right child
     if node.right != None:
-        painter.drawLine( x + 10, y + 20, x + 20 * (2**(height-1) - 1) + 10, y + 30 )
+        painter.drawLine( x + 10, y + 20, x + 20 * 2**(height-1) + 10, y + 30 )
 
         # Draw associated code
-        painter.drawText( x + 10 * (2**(height-1) - 1) + 10, y + 30, "0" )
+        painter.drawText( x + 10 * 2**(height-1) + 10, y + 20, "0" )
 
-        drawNode( painter, node.right, x + 20 * (2**(height-1) - 1), y + 30, height - 1 )
+        drawNode( painter, node.right, x + 20 * 2**(height-1), y + 30, height - 1 )

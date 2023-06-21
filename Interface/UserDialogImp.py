@@ -64,7 +64,6 @@ class UserDialog(QDialog, Ui_Frame):
 
         self.parentChat.receiveData( data )
 
-        # self.parentChat.addText( self.username, self.txtMessageText.toPlainText() )
     
     def sendImage(self):
 
@@ -154,8 +153,6 @@ class UserDialog(QDialog, Ui_Frame):
         return None, pyaudio.paContinue
 
     def graphHuffman(self, rootNode ):
-        # Get canvas
-        logCanvas = self.cnvLog
 
         # Create a pixmap where we will draw into
         paintCodificationTree( rootNode, self.logContainer, self.logLayout )
@@ -175,6 +172,7 @@ class UserDialog(QDialog, Ui_Frame):
 
             # Encode data with huffman
             encoding_tree, bits_encoded, root = Huffman.encode_huffman( data )
+            print("Encoded: ", len(bits_encoded))
 
             # Error control code
 

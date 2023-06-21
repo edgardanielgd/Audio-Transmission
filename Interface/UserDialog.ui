@@ -1571,6 +1571,23 @@ color: white;</string>
     <set>Qt::AlignCenter</set>
    </property>
   </widget>
+  <widget class="QLabel" name="label_2">
+   <property name="geometry">
+    <rect>
+     <x>300</x>
+     <y>180</y>
+     <width>161</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background: none;
+background: transparent;</string>
+   </property>
+   <property name="text">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://elcodigoascii.com.ar/&quot;&gt;Tabla ASCII&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
+  </widget>
  </widget>
  <resources>
   <include location="Resources/ChatterBackground.qrc"/>
