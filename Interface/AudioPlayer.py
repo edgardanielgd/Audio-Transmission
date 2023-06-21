@@ -30,3 +30,6 @@ class AudioPlayer(QThread):
         # Close and terminate the stream
         stream.close()
         p.terminate()
+
+        # Close thread
+        self.exit()

@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>493</width>
+    <width>501</width>
     <height>428</height>
    </rect>
   </property>
@@ -465,7 +465,7 @@ color: white;</string>
     <rect>
      <x>10</x>
      <y>40</y>
-     <width>441</width>
+     <width>471</width>
      <height>321</height>
     </rect>
    </property>
@@ -474,7 +474,7 @@ color: white;</string>
 background-color: black;</string>
    </property>
    <property name="currentIndex">
-    <number>1</number>
+    <number>0</number>
    </property>
    <widget class="QWidget" name="tabLogs">
     <attribute name="title">
@@ -564,7 +564,7 @@ background-color: white;</string>
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>421</width>
+          <width>451</width>
           <height>284</height>
          </rect>
         </property>

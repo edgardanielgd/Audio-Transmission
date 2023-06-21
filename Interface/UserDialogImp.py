@@ -51,7 +51,7 @@ class UserDialog(QDialog, Ui_Frame):
         self.recording = False
 
     def send(self):
-
+        registerLog( "=========================", self.txtLog )
         registerLog( "Enviando texto", self.txtLog )
 
         # Parse text to numbers
@@ -63,10 +63,9 @@ class UserDialog(QDialog, Ui_Frame):
         data["type"] = "text"
 
         self.parentChat.receiveData( data )
-
     
     def sendImage(self):
-
+        registerLog( "=========================", self.txtLog )
         registerLog( "Enviando imagen", self.txtLog)
 
         # Ask user for the path of target image
@@ -104,13 +103,11 @@ class UserDialog(QDialog, Ui_Frame):
     def audioRecord(self):
         if self.recording :
             # Call parent receiver for this info
-            # self.parentChat.receiveAudio( 
-            #     self.username, self.frames, 
-            #     self.FORMAT, self.CHANNELS, self.RATE 
-            # )
+            registerLog( "=========================", self.txtLog )
+            registerLog( "Enviando audio: ", self.txtLog )
 
             # Parse audio to levels
-            levels, quantification_dict = Audio.convertAudioToVector( self.frames, 32 )
+            levels, quantification_dict = Audio.convertAudioToVector( self.frames, 8 )
 
             self.stream.stop_stream()
             self.stream.close()
@@ -172,6 +169,16 @@ class UserDialog(QDialog, Ui_Frame):
 
             # Encode data with huffman
             encoding_tree, bits_encoded, root = Huffman.encode_huffman( data )
+
+            registerLog( "Huffman codification results:", self.txtLog )
+
+            # Lets print each pair-value item in the dictionary
+            for key, value in encoding_tree.items():
+                registerLog( f"{key} : {value}", self.txtLog )
+            
+
+            registerLog( "Unique values: " + str(len(encoding_tree)),self.txtLog )
+            
             print("Encoded: ", len(bits_encoded))
 
             # Error control code

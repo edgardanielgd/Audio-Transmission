@@ -12,9 +12,17 @@ def paintCodificationTree( tree, canvasParent, canvasLayout ):
     last_level_count = 2**deep - 1
     width = last_level_count * 20
     height = deep*20 + (deep-1)*30
+
+    print("Deep: ", deep)
+    print( "Width: ", width )
+    print( "Height: ", height )
+
+    # Set minimum width and height
+    width = max( width, 90000 )
+    height = max( height, 10000 )
     
     # Create a pixmap where we will draw into
-    pixmap = QtGui.QPixmap( width, height )
+    pixmap = QtGui.QPixmap( width + 10 , height + 10 )
 
     # Create a painter
     painter = QtGui.QPainter( pixmap )
@@ -32,13 +40,13 @@ def paintCodificationTree( tree, canvasParent, canvasLayout ):
 
     # We need to keep track of greater width and height in order
     # to resize label as soon we finish the printing process
-    drawNode( painter, tree, (last_level_count//2)*20, 0, deep - 1 )
+    drawNode( painter, tree, (last_level_count//2)*20 + 10, 10, deep - 1 )
     #painter.drawEllipse( width//2 + 20, 0, 20, 20 )
 
     # Resize label
     label = QtWidgets.QLabel()
     # label.setFixedSize( max_width - min_width + 20, max_height + 20 )
-    label.setFixedSize( width, height )
+    label.setFixedSize( width + 10, height + 10 )
 
     # Set pixmap
     label.setPixmap( pixmap )

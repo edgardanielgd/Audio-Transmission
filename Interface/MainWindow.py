@@ -16,8 +16,7 @@ class Test(QMainWindow, Ui_MainWindow):
         for i in range(1000):
             button = QPushButton("Button " + str(i))
             self.frame.layout().addWidget(button)
-        
-        print("Done")
+    
 
 
 # Construct a QApplication

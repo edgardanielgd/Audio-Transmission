@@ -69,27 +69,21 @@ class MainChat(QDialog, Ui_Frame):
         btn.setText(">>> Reproducir audio")
         btn.setStyleSheet(
             """
-                QPushButton {{
-                    background: none;
-                    background-color: black;
-                    color: white;
-                    border-radius: 10px;
-                    border-color: white;
-                    border-width: 1px;
-                    border-style: solid;
-                }}
-
-                QPushButton:hover {{
-                    background-color: white;
-                    color: black;
-                    border-color: black;
-                }}
+                background: none;
+                background-color: black;
+                color: white;
+                border-radius: 10px;
+                border-color: white;
+                border-width: 1px;
+                border-style: solid;
             """
         )
 
         btn.clicked.connect(
             lambda : self.playAudio( waveOutputFile )
         )
+
+        btn.setFixedSize( btn.sizeHint().width(), btn.sizeHint().height() )
 
         message = UserMessage( username, btn, self )
         
@@ -131,7 +125,7 @@ class MainChat(QDialog, Ui_Frame):
         )
         lbl.setSizePolicy( QtWidgets.QSizePolicy.Ignored, QtWidgets.QSizePolicy.Ignored )
         
-        message = UserMessage( username, lbl, self, True )
+        message = UserMessage( username, lbl, self, ( imageObj.width, imageObj.height ) )
 
         # Add the component to ChatBody (Which is a scroll area)
         self.chatBodyContentsLayout.addWidget( message )
@@ -142,35 +136,45 @@ class MainChat(QDialog, Ui_Frame):
         self.audio_player.start()
 
     def receiveData(self, data):
+
+        registerLog( "=========================", self.txtGeneralChatLogs )
+
         # First than all, decode data depending on the encoding algorithm
         # used
 
         method = data["method"]
         username = data["username"]
 
+        # Remove error control data
+        bits = data["data"]
+        
+        bits, logs = decodificar_palabra( bits )
+        
+        for log in logs:
+            registerLog( log, self.txtGeneralChatLogs)
+        
+        bits = bits.tolist()
+
         if method == "Huffman":
-            # Remove error control data
-            bits = data["data"]
-            
-            bits, logs = decodificar_palabra( bits )
-            
-            for log in logs:
-                registerLog( log, self.txtGeneralChatLogs)
-            
-            bits = bits.tolist()
-            
 
             # Binary list to string
             bits = "".join( [ str(x) for x in bits ] )
-            print("Decoded: ", len(bits))
+            registerLog( f"Decoded {len(bits)} after error checking ", self.txtGeneralChatLogs )
 
             # Get additional data
             encoding_tree = data["encoding_tree"]
-            decoded_data = Huffman.decode_huffman_input( encoding_tree, bits )
+            decoded_data, decodification_tree = Huffman.decode_huffman_input( encoding_tree, bits )
 
+            registerLog( "Huffman decodification tree: ", self.txtGeneralChatLogs )
+
+            # Lets print each pair-value item in the dictionary
+            for key, value in decodification_tree.items():
+                registerLog( f"{key} : {value}", self.txtGeneralChatLogs )
         
         # Having data decoded, re shape and format to correct media type
         if data["type"] == "text":
+
+        
             text = Text.buildTextFromVector( decoded_data )
 
             registerLog( "Recibiendo texto: " + text, self.txtGeneralChatLogs)
@@ -180,19 +184,20 @@ class MainChat(QDialog, Ui_Frame):
         elif data["type"] == "image":
             width = data["width"]
             height = data["height"]
+
+            registerLog( "Recibiendo imagen: ", self.txtGeneralChatLogs)
             
             image = Images.buildImageFromVector( decoded_data, width, height )
 
-            registerLog( "Recibiendo imagen: ", self.txtGeneralChatLogs)
-
             self.addImage( username, image )
         elif data["type"] == "audio":
+
+            registerLog( "Recibiendo audio", self.txtGeneralChatLogs)
+
             audio = Audio.buildAudioFromVector( 
                 decoded_data, data["quantification_dict"]
             )
 
-            registerLog( "Recibiendo audio", self.txtGeneralChatLogs)
-            
             self.receiveAudio( 
                 username, audio, data["format"], 
                 data["channels"], data["rate"] 

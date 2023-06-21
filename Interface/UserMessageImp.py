@@ -3,7 +3,7 @@ from PySide6.QtWidgets import QFrame
 from PySide6 import QtWidgets as QWidgets
 
 class UserMessage(QFrame, Ui_Form):
-    def __init__(self, username, child, parent=None, is_image = False):
+    def __init__(self, username, child, parent=None, image_dims = None):
         QFrame.__init__(self, parent)
         self.setupUi(self)
         self.lblUsername.setText(username)
@@ -12,7 +12,7 @@ class UserMessage(QFrame, Ui_Form):
         self.childLayout.setContentsMargins( 0,0,0,0 )
         self.childFrame.setLayout( self.childLayout )
 
-        if is_image:
-            self.childLayout.setFixedSize( 200, 200 )
+        if image_dims:
+            self.childFrame.setFixedSize( image_dims[0], image_dims[1] )
 
         self.childLayout.addWidget( child )

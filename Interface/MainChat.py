@@ -24,7 +24,7 @@ class Ui_Frame(object):
     def setupUi(self, Frame):
         if not Frame.objectName():
             Frame.setObjectName(u"Frame")
-        Frame.resize(493, 428)
+        Frame.resize(501, 428)
         Frame.setStyleSheet(u"background-image: url(:/Background/chatbackground.jpg)")
         self.label = QLabel(Frame)
         self.label.setObjectName(u"label")
@@ -94,7 +94,7 @@ class Ui_Frame(object):
         self.label.setAlignment(Qt.AlignCenter)
         self.tabWidget = QTabWidget(Frame)
         self.tabWidget.setObjectName(u"tabWidget")
-        self.tabWidget.setGeometry(QRect(10, 40, 441, 321))
+        self.tabWidget.setGeometry(QRect(10, 40, 471, 321))
         self.tabWidget.setStyleSheet(u"background: none;\n"
 "background-color: black;")
         self.tabLogs = QWidget()
@@ -140,7 +140,7 @@ class Ui_Frame(object):
         self.ChatBody.setWidgetResizable(True)
         self.scrollAreaWidgetContents = QWidget()
         self.scrollAreaWidgetContents.setObjectName(u"scrollAreaWidgetContents")
-        self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 421, 284))
+        self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 451, 284))
         self.verticalLayout_3 = QVBoxLayout(self.scrollAreaWidgetContents)
         self.verticalLayout_3.setObjectName(u"verticalLayout_3")
         self.ChatBodyContents = QFrame(self.scrollAreaWidgetContents)
@@ -181,7 +181,7 @@ class Ui_Frame(object):
 
         self.retranslateUi(Frame)
 
-        self.tabWidget.setCurrentIndex(1)
+        self.tabWidget.setCurrentIndex(0)
 
 
         QMetaObject.connectSlotsByName(Frame)

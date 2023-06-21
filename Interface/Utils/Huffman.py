@@ -188,4 +188,4 @@ def decode_huffman_input(
     # Update character index
     code_index += 1
 
-  return decoded_data
+  return decoded_data, inverse_decodification
